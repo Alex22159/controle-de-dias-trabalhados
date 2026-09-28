@@ -393,15 +393,18 @@
   function renderPeopleLegend() {
     const entries = entriesInYear(viewYear);
     const totals = {};
+    const dias = {}; // dias distintos trabalhados para cada pessoa
     entries.forEach(r => {
       const nome = r.cliente || (r.tipo === "vip" ? "VIP" : "—");
       totals[nome] = (totals[nome] || 0) + (Number(r.valor) || 0);
+      (dias[nome] = dias[nome] || new Set()).add(r.date);
     });
     const nomes = Object.keys(totals).sort((a, b) => totals[b] - totals[a]);
     const box = document.getElementById("peopleLegend");
     if (!nomes.length) { box.innerHTML = ""; return; }
     box.innerHTML = nomes.map(nome => `
       <div class="people-chip" style="--chip-color:${personColor(nome)}">
+        <span class="people-chip__badge" title="${dias[nome].size} dia(s) trabalhado(s)">${dias[nome].size}</span>
         <span class="people-chip__name">${escapeHTML(nome)}</span>
         <span class="people-chip__value">R$ ${brl(totals[nome])}</span>
       </div>`).join("");
