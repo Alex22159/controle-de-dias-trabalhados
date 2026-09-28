@@ -1,6 +1,6 @@
 /* Service worker simples: cacheia os arquivos do app para funcionar offline
    depois da primeira visita (útil quando acessado pelo celular). */
-const CACHE = "controle-trabalho-v19";
+const CACHE = "controle-trabalho-v20";
 const ASSETS = [
   "./",
   "./index.html",
